@@ -1,0 +1,4 @@
+{
+  "vagrant_user": "travis",
+  "vagrant_group": "travis"
+}

@@ -2,4 +2,4 @@
 vagrant_user: vagrant
 vagrant_group: vagrant
 
-rustup_args: []
+rustup_args: ['-y']

@@ -1,16 +1,21 @@
 ---
 # generate a temporary filename for the installation script
 - name: generate tempfile name
-  command: mktemp --suffix=.sh
+  command: mktemp -u --suffix=.sh
   register: tempfile_result
   become: "{{ vagrant_user }}"
 
 - name: define rustup executable
-  set_fact: rustup_file="{{ tempfile_result.stdout_lines | first }}"
+  set_fact:
+    rustup_file: "{{ tempfile_result.stdout_lines | first }}"
+
+- name: define installation command
+  set_fact:
+    rustup_install_cmd: "/bin/sh {{ rustup_file }} {{ rustup_args | map('quote') | join(' ') }}"
 
 - name: download rustup
   get_url:
-    url: https://sh.rustup.rs
+    url: "https://sh.rustup.rs"
     dest: "{{ rustup_file }}"
     owner: "{{ vagrant_user }}"
     group: "{{ vagrant_group }}"
@@ -18,9 +23,18 @@
   become: "{{ vagrant_user }}"
 
 - name: execute rustup installer
-  command: "{{ rustup_file }} {{ rustup_args | map('quote') | join(' ') }}"
+  command: "{{ rustup_install_cmd }}"
   become: "{{ vagrant_user }}"
 
 - name: remove rustup installer
-  file: path="{{ rustup_file }}" ensure=absent
+  file: path="{{ rustup_file }}" state=absent
+  become: "{{ vagrant_user }}"
+
+- name: append utils to path
+  blockinfile:
+    dest: "/home/{{ vagrant_user }}/.bashrc"
+    block: |
+      export PATH="$PATH:/home/{{ vagrant_user }}/.cargo/bin"
+    owner: "{{ vagrant_user }}"
+    group: "{{ vagrant_group }}"
   become: "{{ vagrant_user }}"
