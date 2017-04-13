@@ -1,37 +1,26 @@
 ---
-language: python
-
-# support minimum python versions specified here:
-# https://docs.ansible.com/ansible/dev_guide/developing_modules_python3.html
-python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"
+dist: trusty
+sudo: required
 
 matrix:
-  allow_failures:
-    - python: "3.4"
+  fast_finish: true
 
-cache:
-  pip: true
+services:
+  - docker
 
-dist: trusty
-sudo: false
+env:
+  global: # applied to every run
+    ROLE_NAME: vagrant-rust-dev
 
-before_install:
-  - pip install --upgrade -r requirements.txt
+  matrix: # each entry is its own run
+    - IMAGE_NAME: naftulikay/centos-vm:7
+    - IMAGE_NAME: naftulikay/xenial-vm:latest
+    - IMAGE_NAME: naftulikay/trusty-vm:latest
 
-install:
-  # display ansible version
-  - ansible --version
-
-script:
-  - tests/test-ansible
+script: make test-clean
 
 notifications:
   email:
-    on_success: change
-    on_failure: change
-
+    on_success: never
+    on_failure: never
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

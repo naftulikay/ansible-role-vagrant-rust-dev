@@ -1,4 +1,5 @@
-# -*- mode: ruby -*-
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
 # vi: set ft=ruby :
 
 require 'shellwords'
@@ -23,10 +24,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Configure the VM using Ansible
   config.vm.provision "ansible_local" do |ansible|
+    ansible.galaxy_role_file = "requirements.yml"
+    ansible.galaxy_roles_path = ".ansible-roles"
+    ansible.provisioning_path = "/vagrant"
+    ansible.playbook = "vagrant.yml"
     # allow passing ansible args from environment variable
     ansible.raw_arguments = Shellwords::shellwords(ENV.fetch("ANSIBLE_ARGS", ""))
-
-    ansible.provisioning_path = "/vagrant/vagrant/"
-    ansible.playbook = "playbook.yml"
   end
 end

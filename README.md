@@ -1,8 +1,8 @@
-# vagrant-rust-dev [![Build Status][svg-travis]][travis]
+# ansible-role-vagrant-rust-dev [![Build Status][travis.svg]][travis]
 
 An Ansible role for a Vagrant-based Rust development setup.
 
-Simply gets the latest [`rustup`][rustup] shell installer, executes it, and removes it if `rustup` is not on the `PATH`.
+Available on Ansible Galaxy at [`naftulikay.vagrant-rust-dev`][galaxy].
 
 ## Requirements
 
@@ -10,25 +10,22 @@ A Vagrant machine which is an operating system/architecture supported by Rust, w
 
 ## Role Variables
 
-### `rustup_args`
+<dl>
+  <dt><code>vagrant_user</code></dt>
+  <dd>The username of the Vagrant user, defaults to <code>vagrant</code></dd>
+</dl>
 
-An optional array of arguments to pass to the `rustup` installer. Defaults to empty, just executes the installer.
-
-### `vagrant_user`
-
-Defaults to `vagrant`. If you're doing something non-standard, use this.
-
-### `vagrant_group`
-
-Defaults to `vagrant`. If you're doing something non-standard, use this.
+> Please see the upstream [`naftulikay.vagrant-base`][vagrant-base] and [`naftulikay.rust-dev`][rust-dev] roles for
+additional supported variables.
 
 ## Dependencies
 
-None.
+ - [`naftulikay.vagrant-base`][vagrant-base]: Provides base Vagrant configuration.
+ - [`naftulikay.rust-dev`]: Provides a basic Rust development environment.
 
 ## Example Playbook
 
-Do the thing:
+Install a Rust development environment within the Vagrant machine:
 
 ```
 ---
@@ -37,20 +34,12 @@ Do the thing:
     - role: vagrant-rust-dev
 ```
 
-Do the thing with a specific argument to the installer:
-
-```
-- hosts: all
-  roles:
-    - role: vagrant-rust-dev
-      rustup_args: ['--do-alternative-thing']
-```
-
 ## LICENSE
 
-MIT. If you need a different license, lemme know.
+MIT.
 
- [svg-travis]: https://travis-ci.org/naftulikay/ansible-role-vagrant-rust-dev.svg?branch=master
-
- [rustup]: https://www.rustup.rs/
  [travis]: https://travis-ci.org/naftulikay/ansible-role-vagrant-rust-dev
+ [travis.svg]: https://travis-ci.org/naftulikay/ansible-role-vagrant-rust-dev.svg?branch=master
+ [galaxy]: https://galaxy.ansible.com/naftulikay/vagrant-rust-dev/
+ [vagrant-base]: https://galaxy.ansible.com/naftulikay/vagrant-base/
+ [rust-dev]: https://galaxy.ansible.com/naftulikay/rust-dev/

@@ -1,5 +1,1 @@
 ---
-vagrant_user: vagrant
-vagrant_group: vagrant
-
-rustup_args: ['-y']
