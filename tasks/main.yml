@@ -1,0 +1,13 @@
+---
+# check for presence of rustup
+- name: check presence of rustup
+  shell: which rustup
+  changed_when: which_rustup_result.rc == 1
+  failed_when: which_rustup_result.rc > 1
+  register: which_rustup_result
+  become: "{{ vagrant_user }}"
+
+# run the install tasks only when rustup isn't present
+- name: include install tasks
+  include: install.yml
+  when: which_rustup_result.rc > 0

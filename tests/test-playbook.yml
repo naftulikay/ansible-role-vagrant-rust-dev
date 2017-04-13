@@ -1,0 +1,4 @@
+---
+- hosts: all
+  role:
+    - role: ansible-role-vagrant-rust-dev  
