@@ -1,8 +1,10 @@
 ---
 # check for presence of rustup
 - name: check presence of rustup
-  shell: which rustup
-  changed_when: which_rustup_result.rc == 1
+  shell: source $HOME/.bashrc && which rustup
+  args:
+    executable: /bin/bash
+  changed_when: which_rustup_result.rc > 0
   failed_when: which_rustup_result.rc > 1
   register: which_rustup_result
   become: "{{ vagrant_user }}"
@@ -10,4 +12,4 @@
 # run the install tasks only when rustup isn't present
 - name: include install tasks
   include: install.yml
-  when: which_rustup_result.rc > 0
+  when: which_rustup_result.changed
