@@ -21,7 +21,7 @@ additional supported variables.
 ## Dependencies
 
  - [`naftulikay.vagrant-base`][vagrant-base]: Provides base Vagrant configuration.
- - [`naftulikay.rust-dev`]: Provides a basic Rust development environment.
+ - [`naftulikay.rust-dev`][rust-dev]: Provides a basic Rust development environment.
 
 ## Example Playbook
 
