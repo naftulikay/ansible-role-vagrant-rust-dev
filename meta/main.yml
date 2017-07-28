@@ -1,7 +1,9 @@
 ---
 galaxy_info:
+  name: vagrant-rust-dev
+  version: 'v0.0.1'
   author: Naftuli Kay
-  description: Install a Rust development environment in a Vagrant machine.
+  description: Install and configure a Rust development environment in a Vagrant machine.
 
   license: MIT
 
@@ -9,23 +11,12 @@ galaxy_info:
 
   platforms:
     - name: EL
-      versions:
-        - 5
-        - 6
-        - 7
-    - name: Fedora
-      versions:
-        - 23
-        - 24
-        - 25
+      versions: [7]
     - name: Ubuntu
-      versions:
-        - trusty
-        - xenial
-        - yakkety
+      versions: [trusty, xenial]
 
-  galaxy_tags:
-    - rust
-    - vagrant
+  galaxy_tags: [rust,rust-lang,vagrant]
 
-dependencies: []
+dependencies:
+  - role: naftulikay.rust-dev
+  - role: naftulikay.vagrant-base
